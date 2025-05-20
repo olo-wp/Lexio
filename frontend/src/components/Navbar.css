@@ -1,0 +1,31 @@
+nav {
+    position: fixed;        /* Przyklejenie */
+    top: 0;
+    left: 0;
+    width: 200px;           /* Szerokość bocznego paska */
+    height: 100vh;          /* Wysokość całej strony */
+    background-color: #1e1e1e;
+    padding: 2rem 1rem;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav li {
+    margin-bottom: 1rem;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+}
+
+.nav a:hover {
+    text-decoration: underline;
+}
