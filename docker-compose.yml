@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgresql
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: lexio_db
+      POSTGRES_USER: lexio_user
+      POSTGRES_PASSWORD: lexio
+    ports:
+      - "55002:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - lexio-network
+
+  backend:
+    build: ./backend
+    container_name: DjangoBackend
+    networks:
+      - lexio-network
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./backend/.env
+
+  frontend:
+    working_dir: /app
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: react-frontend
+    command: sh -c "npm install && npm run dev"
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "5173:5173"
+    networks:
+      - lexio-network
+
+volumes:
+  postgres_data:
+
+networks:
+  lexio-network:
