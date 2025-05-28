@@ -1,0 +1,14 @@
+###
+
+POST http://localhost:8080/api/token/
+#POST http://localhost:8080/api/user/register
+Content-Type: application/json
+
+{
+  "username": "abls",
+  "password": "abc"
+}
+
+###
+
+GET http://localhost:8080/accounts/

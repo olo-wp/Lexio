@@ -1,3 +1,11 @@
 django
 djangorestframework
+djangorestframework-simplejwt
 psycopg[binary]
+django-allauth
+django-cors-headers
+requests
+cryptography
+tzdata
+sqlparse
+asgiref
