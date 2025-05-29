@@ -12,10 +12,7 @@ Diese ständige Unsicherheit und Eifersucht belastete uns beide. Irgendwann wurd
 — Vica
 '''
 
-'''response = get_response(text=text)
 
-arguments_dict = json.loads(response.output[0].arguments)
-'''
 arguments_dict = {'edges': [{'arrow_type': 'plus',
             'label': 'Freundschaft',
             'source': 'n1',
@@ -95,6 +92,9 @@ arguments_dict = {'edges': [{'arrow_type': 'plus',
  'topic': {'description': 'Was macht jede Freundschaft kaputt?',
            'translation': 'What Destroys Friendships?'}}
 
+response = get_response(text=text)
+
+arguments_dict = json.loads(response.output[0].arguments)
 
 #pprint(arguments_dict)
 visualize_graph(arguments_dict)

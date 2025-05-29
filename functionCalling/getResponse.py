@@ -11,7 +11,7 @@ load_dotenv(dotenv_path=dotenv_path)
 
 client = OpenAI()
 
-def get_response(text: str, model: str = "gpt-4o", system_prompt: str = SYSTEM_PROMPT, function = FUNCTION ):
+def get_response(text: str, model: str = "gpt-4.1", system_prompt: str = SYSTEM_PROMPT, function = FUNCTION ):
 
     return client.responses.create(
   model=model,
