@@ -56,7 +56,7 @@ const AuthForm = ({route, method}) => {
     };
 
     const handleGoogleLogin = () => {
-        window.location.href = "http://localhost:8080/accouts/google/callback"
+        window.location.href = "http://localhost:8080/accounts/google/login"
     };
 
     return (

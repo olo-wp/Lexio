@@ -170,7 +170,7 @@ LOGIN_REDIRECT_URL = '/callback/'
 SOCIALACCOUNT_PROVIDERS = {
     'google':{
         'SCOPE': ['email', 'profile'],
-        'AUTH_PARAMS': {'access_type', 'online'},
+        'AUTH_PARAMS': {'access_type': 'online'},
         'OAUTH_PKCE_ENABLED': True,
         'FETCH_USERINFO': True,
     }

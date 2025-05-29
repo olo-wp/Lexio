@@ -68,7 +68,7 @@ def validate_google_token(request):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
-            google_access_token = data.get('access_token')
+            google_access_token = data.get('google_access_token')
             print(google_access_token)
             if not google_access_token:
                 return JsonResponse({'error': 'No Google token'}, status=400)

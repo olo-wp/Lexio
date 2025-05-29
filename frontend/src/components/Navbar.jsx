@@ -1,13 +1,31 @@
 import { Link } from 'react-router-dom';
 import './Navbar.css'
+import {useAuthentication} from "../auth/Auth.js";
+
 
 function Navbar() {
+
+    const {isAuthenticated, logout} = useAuthentication();
+
+    const handleLogout = async () => {
+        logout();
+    }
+
     return (
         <nav>
             <ul className="nav">
                 <li><Link to="/">Start</Link></li>
-                <li><Link to="/login">Logowanie</Link></li>
-                <li><Link to="/settings">Ustawienia</Link></li>
+                {isAuthenticated ? (
+                    <>
+                        <li><Link to="/settings">Settings</Link></li>
+                        <li><Link onClick={handleLogout}>Logout</Link></li>
+                    </>
+                ) : (
+                    <>
+                        <li><Link to="/login">Login</Link></li>
+                        <li><Link to="/register">Register</Link></li>
+                    </>
+                )}
             </ul>
         </nav>
     );
