@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import './Navbar.css'
 import {useAuthentication} from "../auth/Auth.js";
+import ProfBar from "./ProfBar.jsx"
 
 
 function Navbar() {
@@ -14,11 +15,16 @@ function Navbar() {
     return (
         <nav>
             <ul className="nav">
+                {isAuthenticated ? (
+                    <ProfBar />
+                ):(<></>)}
                 <li><Link to="/">Start</Link></li>
                 {isAuthenticated ? (
                     <>
                         <li><Link to="/settings">Settings</Link></li>
-                        <li><Link onClick={handleLogout}>Logout</Link></li>
+                        <li><Link to="/generate">Generate!</Link></li>
+                        <li><Link to="/sets">Your sets</Link></li>
+                        <li><Link to onClick={handleLogout}>Logout</Link></li>
                     </>
                 ) : (
                     <>
