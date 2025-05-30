@@ -5,10 +5,36 @@ POST http://localhost:8080/api/token/
 Content-Type: application/json
 
 {
-  "username": "abls",
-  "password": "abc"
+  "username": "biggie",
+  "password": "okioloigi"
 }
 
 ###
 
 GET http://localhost:8080/accounts/
+
+###
+
+POST http://localhost:8080/api/user/wordlist/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NjMzMjQyLCJpYXQiOjE3NDg2Mjk2NDIsImp0aSI6ImI2OTVlYjE4YmI5NTQwZDBhNTU1YWZlNTJmYjU4ODgwIiwidXNlcl9pZCI6Nn0.8uKWgYH119ctmHTYnpcc5zL477Mt9AYMg7Y41tK5TXQ
+
+{
+  "name": "super sigma words",
+  "words": ["sigma", "sssigma", "boy"]
+}
+
+###
+GET http://localhost:8080/api/user/wordlist/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NjMzMjQyLCJpYXQiOjE3NDg2Mjk2NDIsImp0aSI6ImI2OTVlYjE4YmI5NTQwZDBhNTU1YWZlNTJmYjU4ODgwIiwidXNlcl9pZCI6Nn0.8uKWgYH119ctmHTYnpcc5zL477Mt9AYMg7Y41tK5TXQ
+
+
+###
+DELETE http://localhost:8080/api/user/wordlist/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NjMzMjQyLCJpYXQiOjE3NDg2Mjk2NDIsImp0aSI6ImI2OTVlYjE4YmI5NTQwZDBhNTU1YWZlNTJmYjU4ODgwIiwidXNlcl9pZCI6Nn0.8uKWgYH119ctmHTYnpcc5zL477Mt9AYMg7Y41tK5TXQ
+
+{
+  "name": "super sigma words"
+}
