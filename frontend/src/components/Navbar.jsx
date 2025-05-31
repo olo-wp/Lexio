@@ -6,6 +6,7 @@ function Navbar() {
         <nav>
             <ul className="nav">
                 <li><Link to="/">Start</Link></li>
+                <li><Link to="/graphs">Grafy</Link></li>
                 <li><Link to="/login">Logowanie</Link></li>
                 <li><Link to="/settings">Ustawienia</Link></li>
             </ul>
