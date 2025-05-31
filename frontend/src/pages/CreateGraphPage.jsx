@@ -65,7 +65,12 @@ function Flow() {
   );
 
   return (
-    <div style={{ height: '80vh', width: '80vh' }}>
+    <div style={{
+      left: "200px",
+    height: '95%',
+    width: '100%',
+    position: 'relative'
+  }}>
       <ReactFlow
           colorMode="dark"
         nodes={nodes}

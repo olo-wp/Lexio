@@ -1,8 +1,12 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { Handle, Position, NodeToolbar, useReactFlow } from '@xyflow/react';
 
 const CustomNode = ({ id, data }) => {
   const { setNodes } = useReactFlow();
+  const [editingMain, setEditingMain] = useState(false);
+  const [tempMainText, setTempMainText] = useState('');
+  const [editingSubpoint, setEditingSubpoint] = useState(null);
+  const [tempSubpointText, setTempSubpointText] = useState('');
 
   // Provide safe defaults for all properties
   const safeData = {
@@ -33,6 +37,53 @@ const CustomNode = ({ id, data }) => {
       )
     );
   }, [id, setNodes]);
+
+  // Start editing main label
+  const startEditingMain = () => {
+    setTempMainText(mainLabel.text);
+    setEditingMain(true);
+  };
+
+  // Save main label changes
+  const saveMainEdit = () => {
+    updateNodeData({
+      mainLabel: { ...mainLabel, text: tempMainText }
+    });
+    setEditingMain(false);
+  };
+
+  // Start editing a subpoint
+  const startEditingSubpoint = (index) => {
+    setTempSubpointText(subpoints[index].text);
+    setEditingSubpoint(index);
+  };
+
+  // Save subpoint changes
+  const saveSubpointEdit = (index) => {
+    const updatedSubpoints = [...subpoints];
+    updatedSubpoints[index] = {
+      ...updatedSubpoints[index],
+      text: tempSubpointText
+    };
+    updateNodeData({ subpoints: updatedSubpoints });
+    setEditingSubpoint(null);
+  };
+
+  // Add a new subpoint
+  const addSubpoint = () => {
+    const newSubpoint = {
+      text: 'New point',
+      translation: '',
+      crossed: false
+    };
+    updateNodeData({ subpoints: [...subpoints, newSubpoint] });
+  };
+
+  // Remove a subpoint
+  const removeSubpoint = (index) => {
+    const updatedSubpoints = subpoints.filter((_, i) => i !== index);
+    updateNodeData({ subpoints: updatedSubpoints });
+  };
 
   // Toolbar actions
   const toggleTranslations = () => updateNodeData({ showTranslations: !showTranslations });
@@ -66,38 +117,105 @@ const CustomNode = ({ id, data }) => {
           <button onClick={toggleImageVisibility} className="nodrag">
             {showImages ? 'Hide Images' : 'Show Images'}
           </button>
-          <button onClick={toggleMainLabelCrossed} className="nodrag">
-            {mainLabel.crossed ? 'Uncross Main' : 'Cross Main'}
+          <button onClick={addSubpoint} className="nodrag">
+            Add Subpoint
           </button>
         </div>
       </NodeToolbar>
 
       {showText && (
         <div className="text-content">
-          <div className={`main-label ${mainLabel.crossed ? 'crossed' : ''}`}>
-            {mainLabel.text}
-            {showTranslations && mainLabel.translation && (
-              <span className="translation"> ({mainLabel.translation})</span>
+          <div className="main-label-row">
+            {editingMain ? (
+              <div className="edit-container">
+                <input
+                  type="text"
+                  value={tempMainText}
+                  onChange={(e) => setTempMainText(e.target.value)}
+                  className="edit-input nodrag"
+                  autoFocus
+                />
+                <button
+                  onClick={saveMainEdit}
+                  className="save-button nodrag"
+                >
+                  ✓
+                </button>
+              </div>
+            ) : (
+              <div className="label-container">
+                <span className={`main-label-text ${mainLabel.crossed ? 'crossed' : ''}`}>
+                  {mainLabel.text}
+                </span>
+                {showTranslations && mainLabel.translation && (
+                  <span className="translation"> ({mainLabel.translation})</span>
+                )}
+              </div>
             )}
+            <div className="main-buttons">
+              <button
+                onClick={toggleMainLabelCrossed}
+                className="cross-button nodrag"
+              >
+                {mainLabel.crossed ? '✓' : '✕'}
+              </button>
+              <button
+                onClick={startEditingMain}
+                className="edit-button nodrag"
+              >
+                ✎
+              </button>
+            </div>
           </div>
 
           {subpoints.map((sp, index) => (
-            <div
-              key={index}
-              className={`subpoint ${sp.crossed ? 'crossed' : ''}`}
-            >
-              <span>
-                {sp.text}
-                {showTranslations && sp.translation && (
-                  <span className="translation"> ({sp.translation})</span>
-                )}
-              </span>
-              <button
-                onClick={toggleSubpointCrossed(index)}
-                className="nodrag subpoint-cross"
-              >
-                {sp.crossed ? '✓' : '✕'}
-              </button>
+            <div key={index} className="subpoint-row">
+              {editingSubpoint === index ? (
+                <div className="edit-container">
+                  <input
+                    type="text"
+                    value={tempSubpointText}
+                    onChange={(e) => setTempSubpointText(e.target.value)}
+                    className="edit-input nodrag"
+                    autoFocus
+                  />
+                  <button
+                    onClick={() => saveSubpointEdit(index)}
+                    className="save-button nodrag"
+                  >
+                    ✓
+                  </button>
+                </div>
+              ) : (
+                <div className="label-container">
+                  <span className={`subpoint-text ${sp.crossed ? 'crossed' : ''}`}>
+                    {sp.text}
+                  </span>
+                  {showTranslations && sp.translation && (
+                    <span className="translation"> ({sp.translation})</span>
+                  )}
+                </div>
+              )}
+              <div className="subpoint-buttons">
+                <button
+                  onClick={toggleSubpointCrossed(index)}
+                  className="cross-button nodrag"
+                >
+                  {sp.crossed ? '✓' : '✕'}
+                </button>
+                <button
+                  onClick={() => startEditingSubpoint(index)}
+                  className="edit-button nodrag"
+                >
+                  ✎
+                </button>
+                <button
+                  onClick={() => removeSubpoint(index)}
+                  className="remove-button nodrag"
+                >
+                  ×
+                </button>
+              </div>
             </div>
           ))}
         </div>

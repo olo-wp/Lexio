@@ -5,6 +5,12 @@
   text-align: center;
 }
 
+.main-content {
+  margin-left: 200px; /* Same as navbar width */
+  height: 100vh;
+  width: calc(100vw - 200px); /* Full width minus navbar */
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -44,8 +50,6 @@
 
 
 /*custom node css*/
-
-
 /* Base styles */
 .custom-node {
   padding: 12px;
@@ -67,22 +71,17 @@
 /* Toolbar */
 .toolbar-content {
   display: flex;
-  gap: 6px;
+  gap: 4px; /* Reduced gap */
   background: #f8fafc;
-  padding: 6px;
+  padding: 4px; /* Reduced padding */
   border-radius: 4px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   flex-wrap: wrap;
 }
 
-.dark .toolbar-content {
-  background: #334155;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
-
 .toolbar-button {
-  padding: 4px 8px;
-  font-size: 0.8rem;
+  padding: 2px 6px; /* Smaller padding */
+  font-size: 0.7rem; /* Smaller font */
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 3px;
@@ -90,70 +89,192 @@
   transition: all 0.2s ease;
 }
 
-.toolbar-button:hover {
-  background: #f1f5f9;
+/* Dark mode adjustments */
+.dark .toolbar-content {
+  background: #334155;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .dark .toolbar-button {
   color: #f8fafc;
   border-color: #475569;
 }
+.toolbar-button:hover {
+  background: #f1f5f9;
+}
+
 
 /* Text content */
 .text-content {
   margin: 8px 0;
 }
 
-.main-label {
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 8px;
-  position: relative;
-  color: #1e293b;
-}
-
-.dark .main-label {
-  color: #f8fafc;
-}
-
-.subpoint {
+/* Row layouts */
+.main-label-row,
+.subpoint-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 8px;
+}
+
+.subpoint-row {
   padding: 4px 0;
   border-bottom: 1px dashed #e2e8f0;
+}
+
+.dark .subpoint-row {
+  border-bottom-color: #475569;
+}
+
+.label-container {
+  flex-grow: 1;
+  margin-right: 8px;
+  position: relative;
+}
+
+/* Text styles */
+.main-label-text {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #1e293b;
+  position: relative;
+}
+
+.dark .main-label-text {
+  color: #f8fafc;
+}
+
+.subpoint-text {
   font-size: 0.9rem;
   color: #334155;
 }
 
-.dark .subpoint {
+.dark .subpoint-text {
   color: #e2e8f0;
-  border-bottom-color: #475569;
+}
+
+/* Button styles */
+.main-buttons,
+.subpoint-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.cross-button,
+.edit-button,
+.remove-button {
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  padding: 0;
+}
+
+.dark .cross-button,
+.dark .edit-button,
+.dark .remove-button {
+  background: #334155;
+  border-color: #475569;
+  color: #f8fafc;
+}
+
+.remove-button {
+  color: #dc2626;
+}
+
+.dark .remove-button {
+  color: #f87171;
 }
 
 /* Crossed effect */
 .crossed {
   position: relative;
 }
-.crossed:before,
+.crossed::before,
 .crossed::after {
   content: "";
   position: absolute;
   top: 50%;
   left: 0;
-  right: 0px;
+  right: 0;
   height: 1px;
   background: #dc2626;
-  -webkit-transform: rotate(-15deg);
-  transform: rotate(-15deg);
+transform: rotate(-15deg);
 }
 
-.crossed::after {
-  -webkit-transform: rotate(15deg);
-  transform: rotate(15deg);
+.dark .crossed::after {
+  background: #f87171;
 
+transform: rotate(15deg);
 }
 
 /* Translations */
 .translation {
-  color: #64748b
+  color: #64748b;
+  font-style: italic;
+  margin-left: 4px;
+  font-size: 0.85rem;
+}
+
+.dark .translation {
+  color: #94a3b8;
+}
+
+/* Edit container */
+.edit-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  margin-right: 8px;
+}
+
+.edit-input {
+  flex-grow: 1;
+  padding: 4px 6px;
+  border: 1px solid #e2e8f0;
+  border-radius: 3px;
+  font-size: 0.9rem;
+}
+
+.dark .edit-input {
+  background: #334155;
+  border-color: #475569;
+  color: #f8fafc;
+}
+
+.save-button {
+  margin-left: 4px;
+  padding: 4px 8px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Images */
+.image-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.node-image {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid #e2e8f0;
+}
+
+.dark .node-image {
+  border-color: #475569;
+}

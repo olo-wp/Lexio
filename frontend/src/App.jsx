@@ -10,12 +10,15 @@ function App() {
   return (
     <Router>
         <Navbar />
-        <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/graphs" element={<CreateGraphPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <div className="main-content">
+            <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/graphs" element={<CreateGraphPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+        </div>
     </Router>
+
   )
 }
 
