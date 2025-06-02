@@ -17,24 +17,19 @@ GET http://localhost:8080/accounts/
 
 POST http://localhost:8080/api/user/wordlist/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NjMzMjQyLCJpYXQiOjE3NDg2Mjk2NDIsImp0aSI6ImI2OTVlYjE4YmI5NTQwZDBhNTU1YWZlNTJmYjU4ODgwIiwidXNlcl9pZCI6Nn0.8uKWgYH119ctmHTYnpcc5zL477Mt9AYMg7Y41tK5TXQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NzAxNDE3LCJpYXQiOjE3NDg2OTc4MTcsImp0aSI6ImUwYTU1YTEzMTljNDRjZDI5MzgzZThlMTJmOWU0NzkxIiwidXNlcl9pZCI6Nn0.o9gxTlhNHunFmxPBei3Rhkdy5mrvvLgJD0DI3H2Ki9k
 
 {
-  "name": "super sigma words",
+  "name": "super",
   "words": ["sigma", "sssigma", "boy"]
 }
 
 ###
 GET http://localhost:8080/api/user/wordlist/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NjMzMjQyLCJpYXQiOjE3NDg2Mjk2NDIsImp0aSI6ImI2OTVlYjE4YmI5NTQwZDBhNTU1YWZlNTJmYjU4ODgwIiwidXNlcl9pZCI6Nn0.8uKWgYH119ctmHTYnpcc5zL477Mt9AYMg7Y41tK5TXQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NzAxNDE3LCJpYXQiOjE3NDg2OTc4MTcsImp0aSI6ImUwYTU1YTEzMTljNDRjZDI5MzgzZThlMTJmOWU0NzkxIiwidXNlcl9pZCI6Nn0.o9gxTlhNHunFmxPBei3Rhkdy5mrvvLgJD0DI3H2Ki9k
 
 
 ###
-DELETE http://localhost:8080/api/user/wordlist/
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NjMzMjQyLCJpYXQiOjE3NDg2Mjk2NDIsImp0aSI6ImI2OTVlYjE4YmI5NTQwZDBhNTU1YWZlNTJmYjU4ODgwIiwidXNlcl9pZCI6Nn0.8uKWgYH119ctmHTYnpcc5zL477Mt9AYMg7Y41tK5TXQ
-
-{
-  "name": "super sigma words"
-}
+DELETE http://localhost:8080/api/user/wordlist/1/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NzAxNDE3LCJpYXQiOjE3NDg2OTc4MTcsImp0aSI6ImUwYTU1YTEzMTljNDRjZDI5MzgzZThlMTJmOWU0NzkxIiwidXNlcl9pZCI6Nn0.o9gxTlhNHunFmxPBei3Rhkdy5mrvvLgJD0DI3H2Ki9k

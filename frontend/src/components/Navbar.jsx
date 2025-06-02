@@ -16,7 +16,9 @@ function Navbar() {
         <nav>
             <ul className="nav">
                 {isAuthenticated ? (
-                    <ProfBar />
+                    <>
+                        <li><ProfBar/></li>
+                    </>
                 ):(<></>)}
                 <li><Link to="/">Start</Link></li>
                 {isAuthenticated ? (

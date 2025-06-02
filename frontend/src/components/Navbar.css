@@ -1,22 +1,26 @@
 nav {
-    position: fixed;        /* Przyklejenie */
+    position: fixed;
     top: 0;
     left: 0;
-    width: 200px;           /* Szerokość bocznego paska */
-    height: 100vh;          /* Wysokość całej strony */
+    width: 100%;              /* Cała szerokość strony */
+    height: 60px;             /* Wysokość navbaru */
     background-color: #1e1e1e;
-    padding: 2rem 1rem;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    padding: 0 2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    z-index: 1000;
 }
 
 .nav {
+    display: flex;
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
 .nav li {
-    margin-bottom: 1rem;
+    margin-right: 2rem;       /* Odstęp między linkami */
 }
 
 .nav a {
@@ -24,6 +28,7 @@ nav {
     text-decoration: none;
     font-weight: bold;
     display: block;
+    padding: 1rem 0;
 }
 
 .nav a:hover {

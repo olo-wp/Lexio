@@ -5,21 +5,22 @@ import NotFoundPage from './pages/NotFoundPage';
 import Navbar from './components/Navbar';
 import AuthPage from "./pages/AuthPage.jsx";
 
-import {useAuthentication} from "./auth/Auth.js";
 import GoogleRedirect from "./components/GoogleRedirectHandler.jsx";
 import WordSets from "./pages/WordSets.jsx";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import {useAuthentication} from "./auth/Auth.js";
 
 
 
 function App() {
-    const {isAuthorised} = useAuthentication();
+    const {isAuthenticated, loading} = useAuthentication();
     const ProtectedLogin = () => {
-        return isAuthorised ? <Navigate to={'/'}/> : <AuthPage initialMethod={'login'} />
+        return isAuthenticated ? <Navigate to={'/'}/> : <AuthPage initialMethod={'login'} />
     }
     const ProtectedRegister = () => {
-        return isAuthorised ? <Navigate to={'/'}/> : <AuthPage initialMethod={'register'} />
+        return isAuthenticated ? <Navigate to={'/'}/> : <AuthPage initialMethod={'register'} />
     }
+
+    if(loading) return(<div>Loading.......</div>)
 
   return (
     <Router>
@@ -30,7 +31,7 @@ function App() {
             <Route path="/register" element={<ProtectedRegister />} />
             <Route path="*" element={<NotFoundPage />} />
             <Route path={"/login/callback"} element={<GoogleRedirect />} />
-            <Route path="/sets" element={!isAuthorised ? <WordSets /> : <Navigate to="/login" />} />
+            <Route path="/sets" element={isAuthenticated ? <WordSets /> : <Navigate to="/login" />} />
         </Routes>
     </Router>
   )
