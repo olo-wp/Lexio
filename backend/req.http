@@ -17,10 +17,10 @@ GET http://localhost:8080/accounts/
 
 POST http://localhost:8080/api/user/wordlist/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NzAxNDE3LCJpYXQiOjE3NDg2OTc4MTcsImp0aSI6ImUwYTU1YTEzMTljNDRjZDI5MzgzZThlMTJmOWU0NzkxIiwidXNlcl9pZCI6Nn0.o9gxTlhNHunFmxPBei3Rhkdy5mrvvLgJD0DI3H2Ki9k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4ODc5ODM4LCJpYXQiOjE3NDg4NzYyMzgsImp0aSI6IjZlM2I5OTMwMmYxMjQyNjU5NjVhN2ZiMTM3ODI1OGFmIiwidXNlcl9pZCI6Nn0.p3syd6EeC8CSQJmkWE6UkeE09qZA6OFBS0ZJEZ2T7lo
 
 {
-  "name": "super",
+  "name": "super duper",
   "words": ["sigma", "sssigma", "boy"]
 }
 

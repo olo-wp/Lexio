@@ -1,0 +1,142 @@
+.container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    padding: 2rem;
+    min-height: 80vh;
+}
+
+.wordListsContainer {
+    width: 100%;
+    height: 500px;
+    overflow-y: auto;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.wordListsContainer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.wordListsContainer li {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.wordListsContainer strong {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.wordListRepr {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.wordListsContainer button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.wordContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 500px;
+    overflow-y: auto;
+    width: 100%;
+    padding-right: 1rem;
+}
+
+.wordContainer ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 2rem;
+}
+
+.wordContainer li {
+    background-color: #e7f1ff;
+    padding: 0.6rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wordContainer li button {
+    background: none;
+    border: none;
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.wordForm,
+.wordListForm {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 1.5rem;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.inputContainer input {
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.button {
+    padding: 0.7rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .wordListsContainer,
+    .wordContainer {
+        height: 300px;
+        margin-bottom: 2rem;
+    }
+
+    .wordForm,
+    .wordListForm {
+        max-width: 100%;
+    }
+}
