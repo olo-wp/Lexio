@@ -2,9 +2,9 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;              /* Cała szerokość strony */
-    height: 60px;             /* Wysokość navbaru */
-    background-color: #1e1e1e;
+    width: 100%;
+    height: 60px;
+    background-color: #146bc3;
     padding: 0 2rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     display: flex;
@@ -20,7 +20,7 @@ nav {
 }
 
 .nav li {
-    margin-right: 2rem;       /* Odstęp między linkami */
+    margin-right: 2rem;
 }
 
 .nav a {

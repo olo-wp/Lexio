@@ -1,0 +1,10 @@
+.NotFoundPage{
+    text-align: center;
+    justify-content: center;
+    color: #fb4c2a;
+}
+
+.NotFoundPage p{
+    color: black;
+    font-size: large;
+}

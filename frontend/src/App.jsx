@@ -22,19 +22,21 @@ function App() {
 
     if(loading) return(<div>Loading.......</div>)
 
-  return (
-    <Router>
-        <Navbar />
-        <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<ProtectedLogin />} />
-            <Route path="/register" element={<ProtectedRegister />} />
-            <Route path="*" element={<NotFoundPage />} />
-            <Route path={"/login/callback"} element={<GoogleRedirect />} />
-            <Route path="/sets" element={isAuthenticated ? <WordSets /> : <Navigate to="/login" />} />
-        </Routes>
-    </Router>
-  )
+    return (
+        <Router>
+            <Navbar />
+            <div className="main-content">
+                <Routes>
+                    <Route path="/" element={<LandingPage />} />
+                    <Route path="/login" element={<ProtectedLogin />} />
+                    <Route path="/register" element={<ProtectedRegister />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                    <Route path="/login/callback" element={<GoogleRedirect />} />
+                    <Route path="/sets" element={isAuthenticated ? <WordSets /> : <Navigate to="/login" />} />
+                </Routes>
+            </div>
+        </Router>
+    );
 }
 
 export default App

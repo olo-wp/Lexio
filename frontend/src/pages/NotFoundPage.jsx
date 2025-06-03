@@ -1,6 +1,8 @@
+import '../assets/NotFound.css';
+
 function NotFoundPage() {
     return(
-    <div>
+    <div className="NotFoundPage">
         <h1>Error 404 - Page Not Found</h1>
         <p>
             Page you were looking for does not exist.
