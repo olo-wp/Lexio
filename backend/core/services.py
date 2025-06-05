@@ -63,10 +63,6 @@ def get_user_data(validated_data):
         last_name=user_data.get('family_name')
     )
 
-    print("DEBUG INFO:    ")
-    print(model_to_dict(user))
-    print("END DEBUG INFO ----------------")
-
     refresh_token = RefreshToken.for_user(user)
     access_token = refresh_token.access_token
 

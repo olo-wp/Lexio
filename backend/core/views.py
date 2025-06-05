@@ -1,24 +1,24 @@
-from django.conf import settings
-from urllib.parse import urlencode
-from django.shortcuts import redirect
-from django.contrib.auth.models import User
-from django.utils.decorators import method_decorator
-from rest_framework import generics, status, viewsets, permissions
-from .serializers import UserSerializer, UserWordListSerializer, AuthSerializer
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from allauth.socialaccount.models import SocialAccount, SocialToken
-from django.contrib.auth.decorators import login_required
-from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import get_user_model, login, logout
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .models import UserWordList
-from .services import get_user_data
-from django.http import HttpResponse
-
 import json
+from urllib.parse import urlencode
+
+from allauth.socialaccount.models import SocialAccount, SocialToken
+from django.conf import settings
+from django.contrib.auth import get_user_model, logout
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.http import JsonResponse
+from django.shortcuts import redirect
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import generics, status, viewsets
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from .models import UserWordList
+from .serializers import UserSerializer, UserWordListSerializer, AuthSerializer
+from .services import get_user_data
 
 User = get_user_model()
 
@@ -36,6 +36,18 @@ class UserDetailView(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+    def patch(self, request, item_id):
+        try:
+            user = User.objects.get(pk=item_id)
+        except(User.DoesNotExist):
+            return Response({'detail': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserListView(generics.ListAPIView):
@@ -111,6 +123,7 @@ class CheckUserExistsView(APIView):
 
 class GoogleLoginApi(APIView):
     permission_classes = [AllowAny]
+
     def get(self, request, *args, **kwargs):
         auth_serializer = AuthSerializer(data=request.GET)
         auth_serializer.is_valid(raise_exception=True)

@@ -20,6 +20,7 @@ from rest_framework.routers import DefaultRouter
 from core.views import *
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+
 router = DefaultRouter()
 router.register(r'user/wordlist', UserWordListView, basename='user_wordlist')
 
@@ -32,6 +33,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('callback/', google_login_callback, name='callback'),
     path('api/auth/user/', UserDetailView.as_view(), name='user_detail'),
+    path('api/auth/user/<int:item_id>/', UserDetailView.as_view(), name='user_detail_patch'),
     path('api/google/validate_token/', validate_google_token, name='validate_token'),
     path('api/users/', UserListView.as_view(), name='user_list'),
     path('api/user-exists/', CheckUserExistsView.as_view(), name='user-exists'),

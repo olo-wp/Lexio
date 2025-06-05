@@ -11,7 +11,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/accounts/
+GET http://localhost:8080/api/users/
 
 ###
 
@@ -37,3 +37,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 ###
 OPTIONS http://localhost:8080/api/user/wordlist/33/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4OTY1MDk3LCJpYXQiOjE3NDg5NjE0OTcsImp0aSI6IjcwYjRiOWUwNGU2NzRkYmRhYjE1NjFjZmJmNDIzNDgxIiwidXNlcl9pZCI6Nn0.ZfPKiEjaPdOZYGX0e3c7IuCLzDsf5KZEumJlY071p10
+
+###
+PATCH http://localhost:8080/api/auth/user/6/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MTYzNjEzLCJpYXQiOjE3NDkxNjAwMTMsImp0aSI6IjE3MzdmY2FjMzBhNTQ4NDFiNmE4YzE1MjMwYTVkZmE1IiwidXNlcl9pZCI6Nn0.oJS6HQSYXTyIbsok7OuL-cYF3Fs-xgPYo3zQI7-0k10
+
+{
+  "username": "biggie"
+}
+
+###
+GET http://localhost:8080/api/auth/user/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MTYzNjEzLCJpYXQiOjE3NDkxNjAwMTMsImp0aSI6IjE3MzdmY2FjMzBhNTQ4NDFiNmE4YzE1MjMwYTVkZmE1IiwidXNlcl9pZCI6Nn0.oJS6HQSYXTyIbsok7OuL-cYF3Fs-xgPYo3zQI7-0k10
