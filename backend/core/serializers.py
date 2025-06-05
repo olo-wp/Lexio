@@ -18,4 +18,9 @@ class UserSerializer(serializers.ModelSerializer):
 class UserWordListSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserWordList
-        fields = ('id', 'name','words')
+        fields = ('id', 'name', 'words')
+
+
+class AuthSerializer(serializers.Serializer):
+    code = serializers.CharField(required=False)
+    error = serializers.CharField(required=False)

@@ -3,6 +3,7 @@ import {ACCESS_TOKEN, REFRESH_TOKEN} from "../auth/token.js";
 import "./AuthForm.css";
 import React, {useState} from "react";
 import api from "../auth/api.js";
+import LoginButton from "./LoginButton.jsx";
 
 const AuthForm = ({route, method}) => {
     const [username, setUsername] = useState('');
@@ -94,14 +95,7 @@ const AuthForm = ({route, method}) => {
                     <button type="submit" className="form-button">
                         {method === "register" ? "Register" : "Login"}
                     </button>
-                    <button type="button" className="google-button" onClick={handleGoogleLogin}>
-                        <img
-                            src="https://developers.google.com/identity/images/btn_google_signin_light_normal_web.png"
-                            alt="Google icon"
-                            className="google-icon"
-                        />
-                        {method === "register" ? "Register with Google" : "Login with Google"}
-                    </button>
+                    <LoginButton/>
                     {method === "login" && (
                         <p className="toggle-text">
                             Don't have an account?

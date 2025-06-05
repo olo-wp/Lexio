@@ -9,3 +9,4 @@ cryptography
 tzdata
 sqlparse
 asgiref
+django-environ

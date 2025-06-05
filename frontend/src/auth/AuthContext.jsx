@@ -1,4 +1,5 @@
 import {useState, useEffect, createContext} from "react";
+import { useLocation } from 'react-router-dom';
 import {jwtDecode} from "jwt-decode";
 import api from "./api"
 import {ACCESS_TOKEN, REFRESH_TOKEN, GOOGLE_ACCESS_TOKEN} from "./token.js";
@@ -10,11 +11,16 @@ const AuthContext = createContext({
 });
 
 export const AuthMaster = ({ children }) => {
+    console.log("auth master render")
+
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
+    const location = useLocation();
 
     useEffect(() => {
         const auth = async () => {
+            console.log("auth master working")
+            await new Promise((resolve) => setTimeout(resolve, 300));
             const token = localStorage.getItem(ACCESS_TOKEN);
             const googleAccessToken = localStorage.getItem(GOOGLE_ACCESS_TOKEN);
 
@@ -49,7 +55,7 @@ export const AuthMaster = ({ children }) => {
             setIsAuthenticated(false);
             setLoading(false);
         });
-    },[]);
+    },[location ]);
 
     const refreshToken = async () => {
         const refreshToken = localStorage.getItem(REFRESH_TOKEN);

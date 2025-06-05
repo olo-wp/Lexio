@@ -1,18 +1,22 @@
+from django.conf import settings
+from urllib.parse import urlencode
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 from rest_framework import generics, status, viewsets, permissions
-from .serializers import UserSerializer, UserWordListSerializer
+from .serializers import UserSerializer, UserWordListSerializer, AuthSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from allauth.socialaccount.models import SocialAccount, SocialToken
 from django.contrib.auth.decorators import login_required
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login, logout
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import UserWordList
+from .services import get_user_data
+from django.http import HttpResponse
 
 import json
 
@@ -104,4 +108,23 @@ class CheckUserExistsView(APIView):
         exists = User.objects.filter(username=username).exists()
         return Response({'exists': exists})
 
-# Create your views here.
+
+class GoogleLoginApi(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request, *args, **kwargs):
+        auth_serializer = AuthSerializer(data=request.GET)
+        auth_serializer.is_valid(raise_exception=True)
+
+        validated_data = auth_serializer.validated_data
+        user_data = get_user_data(validated_data)
+
+        frontend_url = f"{settings.BASE_APP_URL}/auth/callback"
+        query_params = urlencode(user_data)
+        redirect_url = f"{frontend_url}?{query_params}"
+        return redirect(redirect_url)
+
+
+class LogoutApi(APIView):
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return HttpResponse('200')

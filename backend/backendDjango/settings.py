@@ -13,10 +13,12 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-import os
 from datetime import timedelta
-
+import environ
 import corsheaders
+
+env = environ.Env()
+env.read_env('.env.local')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -88,14 +90,15 @@ WSGI_APPLICATION = 'backendDjango.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_DB'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
@@ -177,4 +180,10 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 SOCIALACCOUNT_STORE_TOKENS = True
+
+GOOGLE_OAUTH2_CLIENT_ID = env('GOOGLE_OAUTH2_CLIENT_ID')
+GOOGLE_OAUTH2_CLIENT_SECRET = env('GOOGLE_OAUTH2_CLIENT_SECRET')
+BASE_APP_URL = env('BASE_APP_URL')
+BASE_API_URL = env('BASE_API_URL')
+
 

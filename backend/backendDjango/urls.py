@@ -35,6 +35,7 @@ urlpatterns = [
     path('api/google/validate_token/', validate_google_token, name='validate_token'),
     path('api/users/', UserListView.as_view(), name='user_list'),
     path('api/user-exists/', CheckUserExistsView.as_view(), name='user-exists'),
+    path('auth/api/login/google/', GoogleLoginApi.as_view(), name='google_login' ),
 
     path('api/', include(router.urls)),
 ]
