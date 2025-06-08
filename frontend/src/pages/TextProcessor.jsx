@@ -11,8 +11,14 @@ function TextProcessor() {
     e.preventDefault();
     setLoading(true);
 
+
+
+
+    //----------------------------
+    // TUTAJ ROBISZ CALL:
+
     const payload = {
-      language,
+      language, // optional, default ustawilem na german
       level,
       words: words.split(',').map((w) => w.trim()).filter(Boolean),
     };
@@ -25,6 +31,10 @@ function TextProcessor() {
         },
         body: JSON.stringify(payload),
       });
+
+
+
+    //----------------------------
 
       const data = await response.json();
       setResult(data);
