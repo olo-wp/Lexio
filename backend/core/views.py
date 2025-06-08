@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
+from .graphGeneration.functionCalling.getResponse import get_response
 
 
 # EXAMPLE VIEW
@@ -31,6 +32,33 @@ def process_text(request):
             }
 
             return JsonResponse(response_data)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
+
+
+
+@csrf_exempt
+def generate_graph(request):
+    if request.method == 'POST':
+        try:
+            # Parse the JSON data from the request body
+            data = json.loads(request.body)
+            text = data.get('text', '')
+
+            # Perform your calculations here
+
+            response = get_response(text=text)
+
+
+            arguments_dict = json.loads(response.output[0].arguments)
+
+            print(arguments_dict)
+
+
+            return JsonResponse(arguments_dict)
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON'}, status=400)

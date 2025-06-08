@@ -2,3 +2,5 @@ django
 djangorestframework
 psycopg[binary]
 django-cors-headers
+openai==1.82.0
+python-dotenv

@@ -1,19 +1,25 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { Handle, Position, NodeToolbar, useReactFlow } from '@xyflow/react';
 
-const CustomNode = ({ id, data }) => {
+const CustomNode = ({ id, data, setDraggable }) => {
   const { setNodes } = useReactFlow();
   const [editingMain, setEditingMain] = useState(false);
-  const [tempMainText, setTempMainText] = useState('');
+  const [editingMainTranslation, setEditingMainTranslation] = useState(false);
   const [editingSubpoint, setEditingSubpoint] = useState(null);
+  const [editingSubpointTranslation, setEditingSubpointTranslation] = useState(null);
+
+  // Temporary state for editing
+  const [tempMainText, setTempMainText] = useState('');
+  const [tempMainTranslation, setTempMainTranslation] = useState('');
   const [tempSubpointText, setTempSubpointText] = useState('');
+  const [tempSubpointTranslation, setTempSubpointTranslation] = useState('');
 
   // Provide safe defaults for all properties
   const safeData = {
     mainLabel: data.mainLabel || { text: '', translation: '', crossed: false },
     subpoints: data.subpoints || [],
     images: data.images || [],
-    showTranslations: data.showTranslations || false,
+    showTranslations: data.showTranslations !== undefined ? data.showTranslations : true,
     showText: data.showText !== undefined ? data.showText : true,
     showImages: data.showImages !== undefined ? data.showImages : true
   };
@@ -27,6 +33,15 @@ const CustomNode = ({ id, data }) => {
     showImages
   } = safeData;
 
+  // Disable dragging when editing
+  useEffect(() => {
+    if (setDraggable) {
+      const isEditing = editingMain || editingMainTranslation ||
+                       editingSubpoint !== null || editingSubpointTranslation !== null;
+      setDraggable(!isEditing);
+    }
+  }, [editingMain, editingMainTranslation, editingSubpoint, editingSubpointTranslation, setDraggable]);
+
   // Update node data helper
   const updateNodeData = useCallback((newData) => {
     setNodes(nodes =>
@@ -38,38 +53,54 @@ const CustomNode = ({ id, data }) => {
     );
   }, [id, setNodes]);
 
-  // Start editing main label
+  // Main label handlers
   const startEditingMain = () => {
     setTempMainText(mainLabel.text);
     setEditingMain(true);
   };
 
-  // Save main label changes
-  const saveMainEdit = () => {
-    updateNodeData({
-      mainLabel: { ...mainLabel, text: tempMainText }
-    });
-    setEditingMain(false);
+  const startEditingMainTranslation = () => {
+    setTempMainTranslation(mainLabel.translation);
+    setEditingMainTranslation(true);
   };
 
-  // Start editing a subpoint
+  const saveMainEdit = () => {
+    updateNodeData({
+      mainLabel: {
+        ...mainLabel,
+        text: tempMainText,
+        translation: tempMainTranslation
+      }
+    });
+    setEditingMain(false);
+    setEditingMainTranslation(false);
+  };
+
+  // Subpoint handlers
   const startEditingSubpoint = (index) => {
     setTempSubpointText(subpoints[index].text);
+    setTempSubpointTranslation(subpoints[index].translation);
     setEditingSubpoint(index);
   };
 
-  // Save subpoint changes
+  const startEditingSubpointTranslation = (index) => {
+    setTempSubpointTranslation(subpoints[index].translation);
+    setEditingSubpointTranslation(index);
+  };
+
   const saveSubpointEdit = (index) => {
     const updatedSubpoints = [...subpoints];
     updatedSubpoints[index] = {
       ...updatedSubpoints[index],
-      text: tempSubpointText
+      text: tempSubpointText,
+      translation: tempSubpointTranslation
     };
     updateNodeData({ subpoints: updatedSubpoints });
     setEditingSubpoint(null);
+    setEditingSubpointTranslation(null);
   };
 
-  // Add a new subpoint
+  // Add a new subpoint with both text and translation
   const addSubpoint = () => {
     const newSubpoint = {
       text: 'New point',
@@ -85,10 +116,11 @@ const CustomNode = ({ id, data }) => {
     updateNodeData({ subpoints: updatedSubpoints });
   };
 
-  // Toolbar actions
+  // Toggle handlers
   const toggleTranslations = () => updateNodeData({ showTranslations: !showTranslations });
   const toggleTextVisibility = () => updateNodeData({ showText: !showText });
   const toggleImageVisibility = () => updateNodeData({ showImages: !showImages });
+
   const toggleMainLabelCrossed = () => updateNodeData({
     mainLabel: { ...mainLabel, crossed: !mainLabel.crossed }
   });
@@ -125,6 +157,7 @@ const CustomNode = ({ id, data }) => {
 
       {showText && (
         <div className="text-content">
+          {/* Main Label Section */}
           <div className="main-label-row">
             {editingMain ? (
               <div className="edit-container">
@@ -133,22 +166,51 @@ const CustomNode = ({ id, data }) => {
                   value={tempMainText}
                   onChange={(e) => setTempMainText(e.target.value)}
                   className="edit-input nodrag"
+                  placeholder="German text"
                   autoFocus
                 />
-                <button
-                  onClick={saveMainEdit}
-                  className="save-button nodrag"
-                >
-                  ✓
-                </button>
+                {showTranslations && (
+                  <input
+                    type="text"
+                    value={tempMainTranslation}
+                    onChange={(e) => setTempMainTranslation(e.target.value)}
+                    className="edit-input nodrag"
+                    placeholder="Translation"
+                  />
+                )}
+                <div className="edit-buttons">
+                  <button
+                    onClick={saveMainEdit}
+                    className="save-button nodrag"
+                  >
+                    ✓
+                  </button>
+                  <button
+                    onClick={() => {
+                      setEditingMain(false);
+                      setEditingMainTranslation(false);
+                    }}
+                    className="cancel-button nodrag"
+                  >
+                    ✕
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="label-container">
-                <span className={`main-label-text ${mainLabel.crossed ? 'crossed' : ''}`}>
+                <span
+                  className={`main-label-text ${mainLabel.crossed ? 'crossed' : ''}`}
+                  onDoubleClick={startEditingMain}
+                >
                   {mainLabel.text}
                 </span>
                 {showTranslations && mainLabel.translation && (
-                  <span className="translation"> ({mainLabel.translation})</span>
+                  <span
+                    className="translation"
+                    onDoubleClick={startEditingMainTranslation}
+                  >
+                    {mainLabel.translation}
+                  </span>
                 )}
               </div>
             )}
@@ -156,18 +218,21 @@ const CustomNode = ({ id, data }) => {
               <button
                 onClick={toggleMainLabelCrossed}
                 className="cross-button nodrag"
+                title="Toggle crossed"
               >
                 {mainLabel.crossed ? '✓' : '✕'}
               </button>
               <button
                 onClick={startEditingMain}
                 className="edit-button nodrag"
+                title="Edit"
               >
                 ✎
               </button>
             </div>
           </div>
 
+          {/* Subpoints Section */}
           {subpoints.map((sp, index) => (
             <div key={index} className="subpoint-row">
               {editingSubpoint === index ? (
@@ -177,22 +242,51 @@ const CustomNode = ({ id, data }) => {
                     value={tempSubpointText}
                     onChange={(e) => setTempSubpointText(e.target.value)}
                     className="edit-input nodrag"
+                    placeholder="German text"
                     autoFocus
                   />
-                  <button
-                    onClick={() => saveSubpointEdit(index)}
-                    className="save-button nodrag"
-                  >
-                    ✓
-                  </button>
+                  {showTranslations && (
+                    <input
+                      type="text"
+                      value={tempSubpointTranslation}
+                      onChange={(e) => setTempSubpointTranslation(e.target.value)}
+                      className="edit-input nodrag"
+                      placeholder="Translation"
+                    />
+                  )}
+                  <div className="edit-buttons">
+                    <button
+                      onClick={() => saveSubpointEdit(index)}
+                      className="save-button nodrag"
+                    >
+                      ✓
+                    </button>
+                    <button
+                      onClick={() => {
+                        setEditingSubpoint(null);
+                        setEditingSubpointTranslation(null);
+                      }}
+                      className="cancel-button nodrag"
+                    >
+                      ✕
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <div className="label-container">
-                  <span className={`subpoint-text ${sp.crossed ? 'crossed' : ''}`}>
+                  <span
+                    className={`subpoint-text ${sp.crossed ? 'crossed' : ''}`}
+                    onDoubleClick={() => startEditingSubpoint(index)}
+                  >
                     {sp.text}
                   </span>
                   {showTranslations && sp.translation && (
-                    <span className="translation"> ({sp.translation})</span>
+                    <span
+                      className="translation"
+                      onDoubleClick={() => startEditingSubpointTranslation(index)}
+                    >
+                      {sp.translation}
+                    </span>
                   )}
                 </div>
               )}
@@ -200,18 +294,21 @@ const CustomNode = ({ id, data }) => {
                 <button
                   onClick={toggleSubpointCrossed(index)}
                   className="cross-button nodrag"
+                  title="Toggle crossed"
                 >
                   {sp.crossed ? '✓' : '✕'}
                 </button>
                 <button
                   onClick={() => startEditingSubpoint(index)}
                   className="edit-button nodrag"
+                  title="Edit"
                 >
                   ✎
                 </button>
                 <button
                   onClick={() => removeSubpoint(index)}
                   className="remove-button nodrag"
+                  title="Remove"
                 >
                   ×
                 </button>

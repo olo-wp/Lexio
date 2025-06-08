@@ -278,3 +278,143 @@ transform: rotate(15deg);
 .dark .node-image {
   border-color: #475569;
 }
+
+
+/* Custom Edges */
+
+.edge-input {
+  display: block;
+  width: 100%;
+  padding: 4px;
+  margin-bottom: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.edge-buttons {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.edge-button {
+  flex: 1;
+  padding: 3px 6px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.edge-button.save {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.edge-button.cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+.edge-display {
+  text-align: center;
+}
+
+.edge-label {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.edge-translation {
+  font-size: 0.9em;
+  color: #666;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.edge-actions {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.edge-action-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 3px;
+}
+
+.edit-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.edit-input {
+  width: 100%;
+  padding: 4px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.save-button, .cancel-button {
+  flex: 1;
+  padding: 2px 5px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.save-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.translation {
+  color: #666;
+  font-style: italic;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.label-container {
+  cursor: pointer;
+}
+
+.crossed {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+[title] {
+  position: relative;
+}
+
+[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 10;
+}
