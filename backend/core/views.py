@@ -212,10 +212,14 @@ def generate_text_from_wordsets(request):
         try:
             # Parse the JSON data from the request body
 
-            data = json.loads(request.body)['text']
+            data = json.loads(request.body)
+
+            language = data.get('language', 'german')
+            level = data.get('level', 'any')
+            words = data.get('words', [])
 
             # Perform your calculations here
-            text = text = f"Generate a short and simple text in a given language , appropriate for level, using the given words: " + data
+            text = f"Generate a short and simple text in {language}, appropriate for level {level}, using the following words: {', '.join(words)}."
 
 
             response = get_response(text=text, system_prompt=TEXT_GENERATION_SYSTEM_PROMPT,

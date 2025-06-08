@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
 function TextProcessor() {
-  const [text, setText] = useState('');
+  const [language, setLanguage] = useState('german');
+  const [level, setLevel] = useState('A2');
+  const [words, setWords] = useState('');
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -9,13 +11,19 @@ function TextProcessor() {
     e.preventDefault();
     setLoading(true);
 
+    const payload = {
+      language,
+      level,
+      words: words.split(',').map((w) => w.trim()).filter(Boolean),
+    };
+
     try {
       const response = await fetch('http://localhost:8080/api/generate-text/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
@@ -30,11 +38,33 @@ function TextProcessor() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="enter the language (default german), language level(A1, A2...) and a list of words"
-        />
+        <div>
+          <label>Language:</label>
+          <input
+            type="text"
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+            placeholder="e.g. german"
+          />
+        </div>
+        <div>
+          <label>Level:</label>
+          <input
+            type="text"
+            value={level}
+            onChange={(e) => setLevel(e.target.value)}
+            placeholder="e.g. A2"
+          />
+        </div>
+        <div>
+          <label>Words (comma-separated):</label>
+          <input
+            type="text"
+            value={words}
+            onChange={(e) => setWords(e.target.value)}
+            placeholder="e.g. Hund, spielen, Baum, laufen"
+          />
+        </div>
         <button type="submit" disabled={loading}>
           {loading ? 'Processing...' : 'Process wordset'}
         </button>
