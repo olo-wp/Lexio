@@ -7,7 +7,7 @@ from .functions import *
 
 load_dotenv()
 client = OpenAI()
-def get_response(text: str, model: str = "gpt-4.1", system_prompt: str = SYSTEM_PROMPT, function = GRAPH_GENERATION_FUNCTION ):
+def get_response(text: str, system_prompt: str = None, function = None, model: str = "gpt-4.1", ):
 
     return client.responses.create(
   model=model,

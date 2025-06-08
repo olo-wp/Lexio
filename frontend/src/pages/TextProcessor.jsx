@@ -10,7 +10,7 @@ function TextProcessor() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8080/api/generate-graph/', {
+      const response = await fetch('http://localhost:8080/api/generate-text/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,10 +33,10 @@ function TextProcessor() {
         <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Enter your text here"
+          placeholder="enter the language (default german), language level(A1, A2...) and a list of words"
         />
         <button type="submit" disabled={loading}>
-          {loading ? 'Processing...' : 'Process Text'}
+          {loading ? 'Processing...' : 'Process wordset'}
         </button>
       </form>
 

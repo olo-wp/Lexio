@@ -148,3 +148,24 @@ GRAPH_GENERATION_FUNCTION = {
       },
       "strict": True
     }
+
+
+TEXT_GENERATION_FUNCTION = {
+  "type": "function",
+  "name": "generate_text",
+  "description": "Generate a simple and concise text in a specified language, tailored to a given language proficiency level, using a provided list of words.",
+  "strict": True,
+  "parameters": {
+    "type": "object",
+    "required": [
+      "generated_text"
+    ],
+    "properties": {
+      "generated_text": {
+        "type": "string",
+        "description": "The generated text based on the specified criteria."
+      }
+    },
+    "additionalProperties": False
+  }
+}

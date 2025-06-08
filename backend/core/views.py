@@ -20,6 +20,11 @@ from .models import UserWordList
 from .serializers import UserSerializer, UserWordListSerializer, AuthSerializer
 from .services import get_user_data
 
+from .graphGeneration.functionCalling.getResponse import get_response
+from .graphGeneration.functionCalling.functions import *
+from .graphGeneration.functionCalling.systemPrompts import *
+
+
 User = get_user_model()
 
 
@@ -142,11 +147,6 @@ class LogoutApi(APIView):
         logout(request)
         return HttpResponse('200')
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
-
-from .graphGeneration.functionCalling.getResponse import get_response
 
 
 # EXAMPLE VIEW
@@ -190,7 +190,7 @@ def generate_graph(request):
 
             # Perform your calculations here
 
-            response = get_response(text=text)
+            response = get_response(text=text, system_prompt=GRAPH_GENERATION_SYSTEM_PROMPT, function=GRAPH_GENERATION_FUNCTION)
 
 
             arguments_dict = json.loads(response.output[0].arguments)
@@ -204,3 +204,32 @@ def generate_graph(request):
             return JsonResponse({'error': 'Invalid JSON'}, status=400)
 
     return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
+
+
+@csrf_exempt
+def generate_text_from_wordsets(request):
+    if request.method == 'POST':
+        try:
+            # Parse the JSON data from the request body
+
+            data = json.loads(request.body)['text']
+
+            # Perform your calculations here
+            text = text = f"Generate a short and simple text in a given language , appropriate for level, using the given words: " + data
+
+
+            response = get_response(text=text, system_prompt=TEXT_GENERATION_SYSTEM_PROMPT,
+                                    function=TEXT_GENERATION_FUNCTION)
+
+            arguments_dict = json.loads(response.output[0].arguments)
+
+            print(arguments_dict.get('generated_text'))
+            #generated_text = arguments_dict.get('generated_text')
+
+            return JsonResponse(arguments_dict)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
+

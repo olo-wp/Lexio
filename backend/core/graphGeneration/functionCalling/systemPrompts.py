@@ -1,4 +1,4 @@
-SYSTEM_PROMPT = '''Transform the given German text into a structured learning graph with merged phrases following the specified rules and steps
+GRAPH_GENERATION_SYSTEM_PROMPT = '''Transform the given German text into a structured learning graph with merged phrases following the specified rules and steps
 ### Core Principles\
 \
 1
@@ -320,3 +320,54 @@ ONLY ONE EDGE BETWEEN TWO NODES ALLOWED!\
  Adjust extraction and node creation logic accordingly
 
 '''
+
+
+TEXT_GENERATION_SYSTEM_PROMPT = '''Generate a simple and concise text in a specified language, tailored to a given language proficiency level, using a provided list of words.
+
+Utilize the list of words to construct a coherent text that aligns with the specified language level.
+
+# Steps
+
+1. **Understand Input Parameters**:
+   - Identify the language parameter to determine the language in which to write.
+   - Recognize the level parameter to tailor the complexity of the text.
+
+2. **Text Construction**:
+   - Compose a short text incorporating all provided words.
+   - Ensure the text matches the specified language level (for example, A2 level should include basic grammatical structures and simple vocabulary).
+
+3. **Compliance with Language Level**:
+   - Use simple sentence structures and vocabulary appropriate for the defined level.
+   - Ensure clarity and correctness in the target language.
+
+# Output Format
+
+- A single paragraph of coherent text that is as concise as possible, integrating all provided words.
+
+# Examples
+
+### Input Example
+```json
+{
+  "language": "german",
+  "level": "A2",
+  "words": [
+    "asdsa",
+    "dasdsa",
+    "dsadsasd",
+    "bombaklat"
+  ]
+}
+```
+
+### Example Output
+"In einem kleinen Dorf namens Dasdsa, war Asdsa, ein Hund, der gerne mit seinen Freunden, den Dsadsasd, gespielt hat. Eines Tages fand er einen seltsamen Gegenstand, den Bombaklat, und brachte ihn zurück zum Dorf."
+
+### Placeholder Explanation
+(Real examples should integrate user-provided words appropriately while maintaining a simple, error-free narrative according to specified language proficiency.)
+
+# Notes
+
+- Ensure each word from the list is used at least once in the text.
+- Preserve language accuracy and respect the complexity dictated by the language level.
+- Consider cultural nuances or meanings in word usage according to the language provided.'''
