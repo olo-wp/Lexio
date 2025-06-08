@@ -193,7 +193,7 @@ const getMarkerType = (arrowType) => {
   );
 
    return (
-    <div style={{ height: '95%', width: '100%', position: 'relative' }}>
+    <div style={{ height: '600px', width: '1000px', position: 'relative' }}>
       <ReactFlow
         colorMode="dark"
         nodes={nodes}
