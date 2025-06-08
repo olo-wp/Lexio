@@ -23,9 +23,13 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 router = DefaultRouter()
 router.register(r'user/wordlist', UserWordListView, basename='user_wordlist')
+from core.views import process_text
+from core.views import generate_graph
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/process-text/', process_text, name='process_text'),
+    path('api/generate-graph/', generate_graph, name='generate_graph'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api-auth/', include('rest_framework.urls')),

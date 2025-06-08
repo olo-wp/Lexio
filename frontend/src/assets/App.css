@@ -22,3 +22,375 @@ html, body, #root {
   overflow-y: auto;
   width: 100%;
 }
+
+
+
+/*custom node css*/
+/* Base styles */
+.custom-node {
+  padding: 12px;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  min-width: 250px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Dark mode styles */
+.dark .custom-node {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Toolbar */
+.toolbar-content {
+  display: flex;
+  gap: 4px; /* Reduced gap */
+  background: #f8fafc;
+  padding: 4px; /* Reduced padding */
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+}
+
+.toolbar-button {
+  padding: 2px 6px; /* Smaller padding */
+  font-size: 0.7rem; /* Smaller font */
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Dark mode adjustments */
+.dark .toolbar-content {
+  background: #334155;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.dark .toolbar-button {
+  color: #f8fafc;
+  border-color: #475569;
+}
+.toolbar-button:hover {
+  background: #f1f5f9;
+}
+
+
+/* Text content */
+.text-content {
+  margin: 8px 0;
+}
+
+/* Row layouts */
+.main-label-row,
+.subpoint-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.subpoint-row {
+  padding: 4px 0;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+.dark .subpoint-row {
+  border-bottom-color: #475569;
+}
+
+.label-container {
+  flex-grow: 1;
+  margin-right: 8px;
+  position: relative;
+}
+
+/* Text styles */
+.main-label-text {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #1e293b;
+  position: relative;
+}
+
+.dark .main-label-text {
+  color: #f8fafc;
+}
+
+.subpoint-text {
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+.dark .subpoint-text {
+  color: #e2e8f0;
+}
+
+/* Button styles */
+.main-buttons,
+.subpoint-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.cross-button,
+.edit-button,
+.remove-button {
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  padding: 0;
+}
+
+.dark .cross-button,
+.dark .edit-button,
+.dark .remove-button {
+  background: #334155;
+  border-color: #475569;
+  color: #f8fafc;
+}
+
+.remove-button {
+  color: #dc2626;
+}
+
+.dark .remove-button {
+  color: #f87171;
+}
+
+/* Crossed effect */
+.crossed {
+  position: relative;
+}
+.crossed::before,
+.crossed::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #dc2626;
+transform: rotate(-15deg);
+}
+
+.dark .crossed::after {
+  background: #f87171;
+
+transform: rotate(15deg);
+}
+
+/* Translations */
+.translation {
+  color: #64748b;
+  font-style: italic;
+  margin-left: 4px;
+  font-size: 0.85rem;
+}
+
+.dark .translation {
+  color: #94a3b8;
+}
+
+/* Edit container */
+.edit-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  margin-right: 8px;
+}
+
+.edit-input {
+  flex-grow: 1;
+  padding: 4px 6px;
+  border: 1px solid #e2e8f0;
+  border-radius: 3px;
+  font-size: 0.9rem;
+}
+
+.dark .edit-input {
+  background: #334155;
+  border-color: #475569;
+  color: #f8fafc;
+}
+
+.save-button {
+  margin-left: 4px;
+  padding: 4px 8px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Images */
+.image-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.node-image {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid #e2e8f0;
+}
+
+.dark .node-image {
+  border-color: #475569;
+}
+
+
+/* Custom Edges */
+
+.edge-input {
+  display: block;
+  width: 100%;
+  padding: 4px;
+  margin-bottom: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.edge-buttons {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.edge-button {
+  flex: 1;
+  padding: 3px 6px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.edge-button.save {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.edge-button.cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+.edge-display {
+  text-align: center;
+}
+
+.edge-label {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.edge-translation {
+  font-size: 0.9em;
+  color: #666;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.edge-actions {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.edge-action-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 3px;
+}
+
+.edit-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.edit-input {
+  width: 100%;
+  padding: 4px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.save-button, .cancel-button {
+  flex: 1;
+  padding: 2px 5px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.save-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.translation {
+  color: #666;
+  font-style: italic;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.label-container {
+  cursor: pointer;
+}
+
+.crossed {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+[title] {
+  position: relative;
+}
+
+[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 10;
+}

@@ -10,3 +10,5 @@ tzdata
 sqlparse
 asgiref
 django-environ
+openai==1.82.0
+python-dotenv

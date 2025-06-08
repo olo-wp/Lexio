@@ -24,7 +24,7 @@ function Navbar() {
                 {isAuthenticated ? (
                     <>
                         <li><Link to="/settings">Settings</Link></li>
-                        <li><Link to="/generate">Generate!</Link></li>
+                        <li><Link to="/graphs">Generate!</Link></li>
                         <li><Link to="/sets">Your sets</Link></li>
                         <li><Link to onClick={handleLogout}>Logout</Link></li>
                     </>

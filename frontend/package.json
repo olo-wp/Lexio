@@ -15,7 +15,9 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-google-button": "^0.8.0",
-    "react-router-dom": "^7.6.0"
+    "react-router-dom": "^7.6.0",
+    "@xyflow/react": "^12.6.4",
+    "@dagrejs/dagre": "^1.1.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
