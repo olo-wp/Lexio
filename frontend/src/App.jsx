@@ -9,6 +9,7 @@ import AuthPage from "./pages/AuthPage.jsx";
 import GoogleRedirect from "./components/GoogleRedirectHandler.jsx";
 import WordSets from "./pages/WordSets.jsx";
 import AuthCallback from "./components/AuthCallback.jsx";
+import SettingsPage from "./pages/SettingsPage.jsx"
 import { AuthMaster } from "./auth/AuthContext.jsx";
 import { useContext } from "react";
 import AuthContext from "./auth/AuthContext.jsx";
@@ -40,6 +41,7 @@ function AppRoutes() {
                     <Route path="/login/callback" element={<GoogleRedirect />} />
                     <Route path="/auth/callback" element={<AuthCallback />} />
                     <Route path="/sets" element={isAuthenticated ? <WordSets /> : <Navigate to="/login" />} />
+                    <Route path="/settings" element={isAuthenticated ? <SettingsPage /> : <Navigate to="/login" />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </div>

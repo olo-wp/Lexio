@@ -74,7 +74,7 @@ Ja, ich mache sehr gern Sport
  Du möchtest sicher wissen, welchen, oder? Also, ich trainiere oft Capoeira, aber im Winter fahre ich Ski
  Ich interessiere mich auch für Musik, genau wie du
  In meiner Freizeit höre ich sehr gern Pop
- Am Wochenende gehe ich gern tanzen oder besuche Konzerte
+ Am Wochenende gehe ich gern tanze oder besuche Konzerte
  Einmal in der Woche lerne ich Gitarre spielen und nehme an einem Malkurs teil, denn Malen ist eines meiner Hobbys
 \
 Ich glaube, jetzt weißt du alles über mich, oder? 😊\
