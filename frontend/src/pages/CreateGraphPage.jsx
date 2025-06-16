@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
+
 import {
   ReactFlow,
   addEdge,
@@ -69,6 +70,34 @@ const CreateGraphPage = ({
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [isInputCollapsed, setIsInputCollapsed] = useState(false);
+
+
+  const addNewNode = useCallback(() => {
+    const newNodeId = `node_${Date.now()}`;
+
+    // Calculate position at center of viewport
+
+
+    const newNode = {
+      id: newNodeId,
+      type: 'customNode',
+      position: { x: 400, y: 300 },
+      data: {
+        mainLabel: {
+          text: 'New Node',
+          translation: '',
+          crossed: false
+        },
+        subpoints: [],
+        images: [],
+        showTranslations: false,
+        showText: true,
+        showImages: true
+      }
+    };
+
+    setNodes(nds => [...nds, newNode]);
+  });
 
   // Sync internal state with external changes
   useEffect(() => {
@@ -284,14 +313,17 @@ const CreateGraphPage = ({
         </Panel>
 
         <Panel position="top-right" style={{ display: 'flex', gap: '10px' }}>
+          <button onClick={addNewNode} className="xy-theme__button" title="Add Node">
+            + Node
+          </button>
           <button onClick={() => onLayout('TB')} className="xy-theme__button">
-            Vertical Layout
+            V Layout
           </button>
           <button onClick={() => onLayout('LR')} className="xy-theme__button">
-            Horizontal Layout
+            H Layout
           </button>
           <button onClick={onDownloadImage} className="xy-theme__button">
-            Download Image
+            Download
           </button>
         </Panel>
 

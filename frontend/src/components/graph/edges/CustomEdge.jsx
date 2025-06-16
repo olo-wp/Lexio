@@ -160,13 +160,7 @@ export default function CustomEdge({
                 >
                   {data.showTranslation ? '👁️' : '👁️‍🗨️'}
                 </button>
-                 <button
-              onClick={toggleDirection}
-              className="edge-action-button direction"
-              title={data.arrowType === 'none' ? 'Add arrow' : 'Remove arrow'}
-            >
-              {data.arrowType === 'none' ? '↔' : '→'}
-            </button>
+
               </div>
             </div>
           )}
