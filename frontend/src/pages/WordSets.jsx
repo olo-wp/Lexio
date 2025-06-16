@@ -185,7 +185,6 @@ const WordSets = () => {
             ):(
                 <>Add new word sets</>
             )}
-            {/*h1>MODE = {mode}</h1>*/}
         </div>
     )
 }

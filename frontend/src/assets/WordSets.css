@@ -28,6 +28,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    width: 100%;
 }
 
 .wordListsContainer li {
@@ -51,9 +52,7 @@
 }
 
 .wordListsContainer button {
-    position: absolute;
-    top: 8px;
-    right: 8px;
+    position: relative;
     background: none;
     border: none;
     color: red;
@@ -65,17 +64,15 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    height: 300px;
+    height: 500px;
     overflow-y: auto;
     width: 100%;
-    padding-right: 1rem;
 }
 
 .wordContainer ul {
     list-style: none;
     padding: 0;
     width: 100%;
-    max-width: 500px;
     margin-bottom: 2rem;
 }
 

@@ -37,12 +37,12 @@ function AppRoutes() {
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/login" element={<ProtectedLogin />} />
                     <Route path="/register" element={<ProtectedRegister />} />
-                    <Route path="/graphs" element={<GraphManager />} />
-                    <Route path="/process-text" element={<TextProcessor />} />
                     <Route path="/login/callback" element={<GoogleRedirect />} />
                     <Route path="/auth/callback" element={<AuthCallback />} />
                     <Route path="/sets" element={isAuthenticated ? <WordSets /> : <Navigate to="/login" />} />
                     <Route path="/settings" element={isAuthenticated ? <SettingsPage /> : <Navigate to="/login" />} />
+                    <Route path="/graphs" element={isAuthenticated ? <GraphManager /> : <Navigate to="/login" />} />
+                    <Route path="/process-text" element={isAuthenticated ? <TextProcessor /> : <Navigate to="/login" />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </div>

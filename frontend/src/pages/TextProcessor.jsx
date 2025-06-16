@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import '../components/AuthForm.css'
 
 function TextProcessor() {
   const [language, setLanguage] = useState('german');
@@ -46,46 +47,50 @@ function TextProcessor() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Language:</label>
-          <input
-            type="text"
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-            placeholder="e.g. german"
-          />
-        </div>
-        <div>
-          <label>Level:</label>
-          <input
-            type="text"
-            value={level}
-            onChange={(e) => setLevel(e.target.value)}
-            placeholder="e.g. A2"
-          />
-        </div>
-        <div>
-          <label>Words (comma-separated):</label>
-          <input
-            type="text"
-            value={words}
-            onChange={(e) => setWords(e.target.value)}
-            placeholder="e.g. Hund, spielen, Baum, laufen"
-          />
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Processing...' : 'Process wordset'}
-        </button>
+    <div className={"form-container"}>
+      <form className={"form"} onSubmit={handleSubmit}>
+          <div className={"form-group"}>
+              <div>
+                  <label>Language:</label>
+                  <input
+                      type="text"
+                      value={language}
+                      onChange={(e) => setLanguage(e.target.value)}
+                      placeholder="e.g. german"
+                  />
+              </div>
+              <div>
+                  <label>Level:</label>
+                  <select value={level} onChange={(e) => setLevel(e.target.value)}>
+                      <option value="A1">A1</option>
+                      <option value="A2" selected>A2</option>
+                      <option value="B1">B1</option>
+                      <option value="B2">B2</option>
+                      <option value="C1">C1</option>
+                      <option value="C2">C2</option>
+                  </select>
+              </div>
+              <div>
+                  <label>Words (comma-separated):</label>
+                  <input
+                      type="text"
+                      value={words}
+                      onChange={(e) => setWords(e.target.value)}
+                      placeholder="e.g. Hund, spielen, Baum, laufen"
+                  />
+              </div>
+          </div>
+          <button type="submit" disabled={loading}>
+              {loading ? 'Processing...' : 'Process wordset'}
+          </button>
       </form>
 
-      {result && (
-        <div>
-          <h3>Results:</h3>
-          <pre>{JSON.stringify(result, null, 2)}</pre>
-        </div>
-      )}
+        {result && (
+            <div>
+                <h3>Results:</h3>
+                <pre>{JSON.stringify(result, null, 2)}</pre>
+            </div>
+        )}
     </div>
   );
 }
