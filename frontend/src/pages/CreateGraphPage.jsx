@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import {
   ReactFlow,
   addEdge,
@@ -12,6 +12,8 @@ import {
   MarkerType
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+
+import * as htmlToImage from 'html-to-image';
 import CustomNode from '../components/graph/nodes/CustomNode.jsx';
 import CustomEdge from '../components/graph/edges/CustomEdge.jsx';
 import dagre from '@dagrejs/dagre';
@@ -59,6 +61,7 @@ const CreateGraphPage = ({
   onNodesChange: externalNodesChange,
   onEdgesChange: externalEdgesChange
 }) => {
+  const reactFlowWrapper = useRef(null);
   const [text, setText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -79,6 +82,37 @@ const CreateGraphPage = ({
     externalEdgesChange(edges);
   }, [edges]);
 
+    const onDownloadImage = useCallback(() => {
+    if (!reactFlowWrapper.current) return;
+
+    const flowElement = reactFlowWrapper.current.querySelector('.react-flow');
+
+    htmlToImage.toPng(flowElement, {
+      backgroundColor: '#1a365d',
+      filter: (node) => {
+        // we don't want to add the minimap and controls to the image
+        if (
+          node?.classList?.contains('react-flow__minimap') ||
+          node?.classList?.contains('react-flow__controls') ||
+          node?.classList?.contains('react-flow__panel')
+        ) {
+          return false;
+        }
+
+        return true;
+      },
+    })
+    .then((dataUrl) => {
+      const link = document.createElement('a');
+      link.download = 'graph.png';
+      link.href = dataUrl;
+      link.click();
+    })
+    .catch((err) => {
+      console.error('Error downloading image:', err);
+    });
+  }, []);
+
   const transformResponseToGraph = (graphData) => {
     const transformedNodes = graphData.nodes.map(node => ({
       id: node.id,
@@ -96,7 +130,7 @@ const CreateGraphPage = ({
           crossed: sub.crossed
         })),
         images: [],
-        showTranslations: true,
+        showTranslations: false,
         showText: true,
         showImages: true
       }
@@ -114,7 +148,7 @@ const CreateGraphPage = ({
           label: edge.label,
           translation: edge.translation,
           arrowType: arrowType,
-          showTranslation: true
+          showTranslation: false
         },
         markerEnd: arrowType !== 'none' ? {
           type: getMarkerType(arrowType),
@@ -139,7 +173,7 @@ const CreateGraphPage = ({
         data: {
           label: 'New Connection',
           translation: '',
-          showTranslation: true,
+          showTranslation: false,
           arrowType: 'arrow'
         },
         markerEnd: {
@@ -191,8 +225,8 @@ const CreateGraphPage = ({
     [nodes, edges]
   );
 
-  return (
-    <div style={{ height: '600px', width: '100%', position: 'relative' }}>
+   return (
+    <div style={{ height: '600px', width: '100%', position: 'relative' }} ref={reactFlowWrapper}>
       <ReactFlow
         colorMode="dark"
         nodes={nodes}
@@ -229,6 +263,9 @@ const CreateGraphPage = ({
           </button>
           <button onClick={() => onLayout('LR')} className="xy-theme__button">
             Horizontal Layout
+          </button>
+          <button onClick={onDownloadImage} className="xy-theme__button">
+            Download Image
           </button>
         </Panel>
 
