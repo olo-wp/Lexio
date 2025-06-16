@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.forms import model_to_dict
 from django.shortcuts import redirect
 from django.core.exceptions import ValidationError
 from urllib.parse import urlencode
@@ -56,12 +55,19 @@ def get_user_data(validated_data):
     access_token = google_get_access_token(code, redirect_uri)
     user_data = google_get_user_info(access_token)
 
-    user, created = User.objects.get_or_create(
-        username=user_data['email'],
-        email=user_data['email'],
-        first_name=user_data.get('given_name'),
-        last_name=user_data.get('family_name')
-    )
+    try:
+        user = User.objects.get(
+            email=user_data['email'],
+            first_name=user_data.get('given_name'),
+            last_name=user_data.get('family_name')
+        )
+    except User.DoesNotExist:
+        user = User.objects.create(
+            username=user_data['email'],
+            email=user_data['email'],
+            first_name=user_data.get('given_name'),
+            last_name=user_data.get('family_name')
+        )
 
     refresh_token = RefreshToken.for_user(user)
     access_token = refresh_token.access_token

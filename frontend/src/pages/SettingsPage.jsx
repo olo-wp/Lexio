@@ -5,11 +5,13 @@ import {useNavigate} from "react-router-dom";
 
 const SettingsPage = () => {
     const [newUsername, setNewUsername] = useState("");
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const changeLogin = async (e) => {
-        e.preventDefault()
-        let id
+        e.preventDefault();
+        setError("");
+        let id;
         try{
             const res = await api.get(`/api/auth/user/`, {});
             console.log("this is the first response:", res)
@@ -22,7 +24,7 @@ const SettingsPage = () => {
         } catch (err) {
             console.error("Error getting user id: ", err);
         }
-        console.log("id is:", id)
+        console.log("id is:", id);
         try{
             const res = await api.patch('/api/auth/user/' + id + '/', {
                 "username": newUsername,
@@ -35,6 +37,7 @@ const SettingsPage = () => {
             }
         }catch(err){
             console.error("Error updating user: ", err);
+            setError("This username in already taken");
         }
     }
 
@@ -52,6 +55,7 @@ const SettingsPage = () => {
                         required
                     />
                     <button type="submit" onClick={changeLogin}>Change</button>
+                    {error.length > 0 ? (<p className="error-message">{error}</p>) : (<></>)}
                 </div>
             </form>
         </>
