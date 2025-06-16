@@ -21,10 +21,11 @@ class UserWordListSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'words')
 
 
+# serializers.py
 class UserGraphSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserGraph
-        fields = ('id', 'name', 'nodes', 'edges', 'created_at', 'updated_at')
+        fields = ('id', 'name', 'nodes', 'edges', 'generation_text', 'created_at', 'updated_at')
 
 
 class AuthSerializer(serializers.Serializer):

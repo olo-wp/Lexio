@@ -1,90 +1,135 @@
 .container {
   display: flex;
   height: calc(100vh - 60px);
-  padding: 20px;
+  padding: 1.5rem;
+  background: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .wordListsContainer {
-  width: 250px;
-  border-right: 1px solid #eee;
-  padding-right: 20px;
+  width: 280px;
+  border-right: 1px solid #e2e8f0;
+  padding-right: 1.5rem;
   overflow-y: auto;
+  background: #ffffff;
+  border-radius: 8px;
+  margin-right: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
 }
 
 .wordListsContainer ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .wordListsContainer li {
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
   cursor: pointer;
   position: relative;
+  transition: all 0.2s ease;
+  background: #ffffff;
 }
 
 .wordListsContainer li:hover {
-  background-color: #f5f5f5;
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .wordListsContainer button {
   position: absolute;
-  right: 10px;
-  top: 10px;
-  background: #ff4d4d;
+  right: 0.75rem;
+
+  transform: translateY(-70%);
+  background: #ef4444;
   color: white;
   border: none;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  transition: all 0.2s ease;
+}
+
+.wordListsContainer button:hover {
+  background: #dc2626;
+  transform: translateY(-50%) scale(1.1);
 }
 
 .graphEditorContainer {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding-left: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
 }
 
 .graphHeader {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
   align-items: center;
+  gap: 1rem;
 }
 
 .graphNameInput {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  width: 300px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  flex: 1;
+  max-width: 400px;
+  transition: all 0.2s ease;
+}
+
+.graphNameInput:focus {
+  outline: none;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
 }
 
 .graphActions {
   display: flex;
-  gap: 10px;
+  gap: 0.75rem;
 }
 
 .saveButton, .cancelButton {
-  padding: 10px 15px;
+  padding: 0.75rem 1.25rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
 }
 
 .saveButton {
-  background-color: #4CAF50;
+  background-color: #10b981;
   color: white;
 }
 
+.saveButton:hover {
+  background-color: #059669;
+  transform: translateY(-1px);
+}
+
 .cancelButton {
-  background-color: #f44336;
+  background-color: #ef4444;
   color: white;
+}
+
+.cancelButton:hover {
+  background-color: #dc2626;
+  transform: translateY(-1px);
 }
 
 .placeholder {
@@ -92,17 +137,63 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
-  color: #777;
+  font-size: 1rem;
+  color: #64748b;
+  background: #f8fafc;
+  border-radius: 6px;
+  border: 1px dashed #cbd5e1;
 }
 
 .newGraphButton {
   width: 100%;
-  padding: 10px;
-  background-color: #2196F3;
+  left: 0px;
+  padding: 0.75rem;
+  background-color: #3b82f6;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+  margin-top: 1rem;
+  transition: all 0.2s ease;
+}
+
+.newGraphButton:hover {
+  background-color: #2563eb;
+  transform: translateY(1px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .container {
+    background: #1e293b;
+  }
+
+  .wordListsContainer,
+  .graphEditorContainer {
+    background: #334155;
+    border-color: #475569;
+  }
+
+  .wordListsContainer li {
+    background: #334155;
+    border-color: #475569;
+  }
+
+  .wordListsContainer li:hover {
+    background: #475569;
+  }
+
+  .graphNameInput {
+    background: #1e293b;
+    border-color: #475569;
+    color: #f8fafc;
+  }
+
+  .placeholder {
+    background: #1e293b;
+    border-color: #475569;
+    color: #94a3b8;
+  }
 }

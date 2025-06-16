@@ -12,6 +12,7 @@ function Navbar() {
         logout();
     }
 
+
     return (
         <nav>
             <ul className="nav">

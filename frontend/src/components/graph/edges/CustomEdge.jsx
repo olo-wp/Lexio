@@ -104,7 +104,7 @@ export default function CustomEdge({
           style={{
             position: 'absolute',
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-            background: 'rgba(255, 255, 255, 0.9)',
+            background: 'rgba(0, 0, 0, 0.9)',
             padding: '5px 10px',
             borderRadius: '5px',
             fontSize: '12px',

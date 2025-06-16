@@ -17,11 +17,13 @@ class UserWordList(models.Model):
             models.UniqueConstraint(fields=['user', 'name'], name='unique_word_lists')
         ]
 
+# models.py
 class UserGraph(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='graphs')
     name = models.CharField(max_length=255)
     nodes = models.JSONField(default=list)
     edges = models.JSONField(default=list)
+    generation_text = models.TextField(blank=True, null=True)  # Add this field
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -58,14 +58,17 @@ const getLayoutedElements = (nodes, edges, direction = 'TB') => {
 const CreateGraphPage = ({
   initialNodes = [],
   initialEdges = [],
+  generationText = "",
+  setGenerationText,
   onNodesChange: externalNodesChange,
   onEdgesChange: externalEdgesChange
 }) => {
   const reactFlowWrapper = useRef(null);
-  const [text, setText] = useState('');
+  const [text, setText] = useState(generationText);
   const [isLoading, setIsLoading] = useState(false);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [isInputCollapsed, setIsInputCollapsed] = useState(false);
 
   // Sync internal state with external changes
   useEffect(() => {
@@ -81,8 +84,11 @@ const CreateGraphPage = ({
   useEffect(() => {
     externalEdgesChange(edges);
   }, [edges]);
+   useEffect(() => {
+    setText(generationText);
+  }, [generationText]);
 
-    const onDownloadImage = useCallback(() => {
+  const onDownloadImage = useCallback(() => {
     if (!reactFlowWrapper.current) return;
 
     const flowElement = reactFlowWrapper.current.querySelector('.react-flow');
@@ -210,6 +216,8 @@ const CreateGraphPage = ({
       const { nodes: newNodes, edges: newEdges } = transformResponseToGraph(graphData);
       setNodes(newNodes);
       setEdges(newEdges);
+      setIsInputCollapsed(true); // Collapse after generation
+      setGenerationText(text);
     } catch (error) {
       console.error('Error processing text:', error);
     } finally {
@@ -225,7 +233,7 @@ const CreateGraphPage = ({
     [nodes, edges]
   );
 
-   return (
+  return (
     <div style={{ height: '600px', width: '100%', position: 'relative' }} ref={reactFlowWrapper}>
       <ReactFlow
         colorMode="dark"
@@ -239,22 +247,40 @@ const CreateGraphPage = ({
         fitView
       >
         <Panel position="top-left" style={{ background: 'rgba(0, 0, 0, 0.7)', padding: '10px', borderRadius: '5px' }}>
-          <div style={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
-            <textarea
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              placeholder="Enter text to generate graph"
-              style={{ width: '300px', height: '80px', padding: '8px' }}
-              disabled={isLoading}
-            />
+          {isInputCollapsed ? (
             <button
-              onClick={handleSubmit}
-              disabled={isLoading}
-              style={{ padding: '8px 16px', background: isLoading ? '#555' : '#007bff', color: 'white', border: 'none', borderRadius: '4px' }}
+              onClick={() => setIsInputCollapsed(false)}
+              style={{ padding: '8px 16px', background: '#007bff', color: 'white', border: 'none', borderRadius: '4px' }}
             >
-              {isLoading ? 'Generating...' : 'Generate Graph'}
+              Show Input
             </button>
-          </div>
+          ) : (
+            <div style={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
+              <textarea
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                placeholder="Enter text to generate graph"
+                style={{ width: '300px', height: '80px', padding: '8px' }}
+                disabled={isLoading}
+              />
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <button
+                  onClick={handleSubmit}
+                  disabled={isLoading}
+                  style={{ padding: '8px 16px', background: isLoading ? '#555' : '#007bff', color: 'white', border: 'none', borderRadius: '4px' }}
+                >
+                  {isLoading ? 'Generating...' : 'Generate Graph'}
+                </button>
+                <button
+                  onClick={() => setIsInputCollapsed(true)}
+                  disabled={isLoading}
+                  style={{ padding: '8px 16px', background: '#6c757d', color: 'white', border: 'none', borderRadius: '4px' }}
+                >
+                  Collapse
+                </button>
+              </div>
+            </div>
+          )}
         </Panel>
 
         <Panel position="top-right" style={{ display: 'flex', gap: '10px' }}>

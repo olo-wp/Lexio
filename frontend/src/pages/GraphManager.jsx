@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import api from "../auth/api.js";
 import CreateGraphPage from "./CreateGraphPage";
-import '../assets/WordSets.css';
+import '../assets/GraphManager.css';
 
 const GraphManager = () => {
     const [graphs, setGraphs] = useState([]);
     const [graphName, setGraphName] = useState("");
     const [nodes, setNodes] = useState([]);
     const [edges, setEdges] = useState([]);
+    const [generationText, setGenerationText] = useState("");  // Add this state
     const [error, setError] = useState(null);
     const [mode, setMode] = useState(0); // 0: list, 1: create, 2: edit
     const [currentID, setCurrentID] = useState(-1);
+
 
     useEffect(() => {
         async function fetchGraphs() {
@@ -48,7 +50,8 @@ const GraphManager = () => {
             const graphData = {
                 name: graphName,
                 nodes: nodes,
-                edges: edges
+                edges: edges,
+                generation_text: generationText
             };
 
             if (mode === 1) { // Create new
@@ -77,6 +80,7 @@ const GraphManager = () => {
         setGraphName(graph.name);
         setNodes(graph.nodes || []);
         setEdges(graph.edges || []);
+        setGenerationText(graph.generation_text || "");
     };
 
     const createNewGraph = () => {
@@ -84,6 +88,7 @@ const GraphManager = () => {
         setGraphName("");
         setNodes([]);
         setEdges([]);
+        setGenerationText("");
         setCurrentID(-1);
     };
 
@@ -134,8 +139,11 @@ const GraphManager = () => {
                     <CreateGraphPage
                         initialNodes={nodes}
                         initialEdges={edges}
+                        generationText={generationText}
+                        setGenerationText={setGenerationText}
                         onNodesChange={setNodes}
                         onEdgesChange={setEdges}
+
                     />
                 </div>
             ) : (
