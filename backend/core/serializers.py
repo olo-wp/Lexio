@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import UserWordList
+from .models import UserWordList, UserGraph
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -19,6 +19,12 @@ class UserWordListSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserWordList
         fields = ('id', 'name', 'words')
+
+
+class UserGraphSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserGraph
+        fields = ('id', 'name', 'nodes', 'edges', 'created_at', 'updated_at')
 
 
 class AuthSerializer(serializers.Serializer):

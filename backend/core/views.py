@@ -16,8 +16,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import UserWordList
-from .serializers import UserSerializer, UserWordListSerializer, AuthSerializer
+from .models import UserWordList, UserGraph
+from .serializers import UserSerializer, UserWordListSerializer, UserGraphSerializer, AuthSerializer
 from .services import get_user_data
 
 from .graphGeneration.functionCalling.getResponse import get_response
@@ -70,6 +70,19 @@ class UserWordListView(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+
+class UserGraphViewSet(viewsets.ModelViewSet):
+    serializer_class = UserGraphSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return UserGraph.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 
 @login_required
@@ -192,7 +205,9 @@ def generate_graph(request):
 
             response = get_response(text=text, system_prompt=GRAPH_GENERATION_SYSTEM_PROMPT, function=GRAPH_GENERATION_FUNCTION)
 
+            print(response)
 
+            # !!!!1 HANDLE DIFFERENT RESPONSES< IF WE PUT NONSENSE IN WE GET DIFFERENT RESPONSE
             arguments_dict = json.loads(response.output[0].arguments)
 
             print(arguments_dict)

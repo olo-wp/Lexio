@@ -23,6 +23,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 router = DefaultRouter()
 router.register(r'user/wordlist', UserWordListView, basename='user_wordlist')
+router.register(r'user/graph', UserGraphViewSet, basename='user-graph')
 from core.views import process_text
 from core.views import generate_graph
 from core.views import generate_text_from_wordsets

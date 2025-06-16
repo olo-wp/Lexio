@@ -13,6 +13,7 @@ import SettingsPage from "./pages/SettingsPage.jsx"
 import { AuthMaster } from "./auth/AuthContext.jsx";
 import { useContext } from "react";
 import AuthContext from "./auth/AuthContext.jsx";
+import GraphManager from "./pages/GraphManager.jsx";
 
 function AppRoutes() {
     const { isAuthenticated, loading } = useContext(AuthContext);
@@ -36,7 +37,7 @@ function AppRoutes() {
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/login" element={<ProtectedLogin />} />
                     <Route path="/register" element={<ProtectedRegister />} />
-                    <Route path="/graphs" element={<CreateGraphPage />} />
+                    <Route path="/graphs" element={<GraphManager />} />
                     <Route path="/process-text" element={<TextProcessor />} />
                     <Route path="/login/callback" element={<GoogleRedirect />} />
                     <Route path="/auth/callback" element={<AuthCallback />} />

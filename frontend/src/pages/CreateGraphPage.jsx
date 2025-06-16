@@ -9,24 +9,24 @@ import {
   Panel,
   useNodesState,
   useEdgesState,
-    MarkerType
+  MarkerType
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import CustomNode from './graphComponents/nodes/CustomNode.jsx';
-import CustomEdge from './graphComponents/edges/CustomEdge.jsx';
+import CustomNode from '../components/graph/nodes/CustomNode.jsx';
+import CustomEdge from '../components/graph/edges/CustomEdge.jsx';
 import dagre from '@dagrejs/dagre';
+
+import api from "../auth/api.js";
 
 const NODE_WIDTH = 300;
 const NODE_HEIGHT = 200;
 const nodeTypes = { customNode: CustomNode };
 const edgeTypes = { customEdge: CustomEdge };
 
-// Initialize Dagre graph
-const dagreGraph = new dagre.graphlib.Graph();
-dagreGraph.setDefaultEdgeLabel(() => ({}));
-
 const getLayoutedElements = (nodes, edges, direction = 'TB') => {
   const isHorizontal = direction === 'LR';
+  const dagreGraph = new dagre.graphlib.Graph();
+  dagreGraph.setDefaultEdgeLabel(() => ({}));
   dagreGraph.setGraph({ rankdir: direction });
 
   nodes.forEach(node => {
@@ -53,20 +53,37 @@ const getLayoutedElements = (nodes, edges, direction = 'TB') => {
   });
 };
 
-function Flow() {
+const CreateGraphPage = ({
+  initialNodes = [],
+  initialEdges = [],
+  onNodesChange: externalNodesChange,
+  onEdgesChange: externalEdgesChange
+}) => {
   const [text, setText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
+  // Sync internal state with external changes
+  useEffect(() => {
+    setNodes(initialNodes);
+    setEdges(initialEdges);
+  }, [initialNodes, initialEdges]);
 
+  // Notify parent of changes
+  useEffect(() => {
+    externalNodesChange(nodes);
+  }, [nodes]);
+
+  useEffect(() => {
+    externalEdgesChange(edges);
+  }, [edges]);
 
   const transformResponseToGraph = (graphData) => {
-    // Transform nodes
     const transformedNodes = graphData.nodes.map(node => ({
       id: node.id,
       type: 'customNode',
-      position: { x: 0, y: 0 }, // Will be set by layout
+      position: { x: 0, y: 0 },
       data: {
         mainLabel: {
           text: node.main_label,
@@ -78,103 +95,85 @@ function Flow() {
           translation: sub.translation,
           crossed: sub.crossed
         })),
-        images: [],//node.image_description ? [node.image_description] : [],
+        images: [],
         showTranslations: true,
         showText: true,
         showImages: true
       }
     }));
 
+    const transformedEdges = graphData.edges.map((edge, index) => {
+      const arrowType = edge.arrow_type || 'arrow';
 
+      return {
+        id: `e${index}-${edge.source}-${edge.target}`,
+        source: edge.source,
+        target: edge.target,
+        type: 'customEdge',
+        data: {
+          label: edge.label,
+          translation: edge.translation,
+          arrowType: arrowType,
+          showTranslation: true
+        },
+        markerEnd: arrowType !== 'none' ? {
+          type: getMarkerType(arrowType),
+          color: '#555',
+          width: 20,
+          height: 20
+        } : undefined,
+        animated: true
+      };
+    });
 
-    // Transform edges
-     const transformedEdges = graphData.edges.map((edge, index) => {
-    const arrowType = edge.arrow_type || 'arrow'; // Default to arrow
-
-    return {
-      id: `e${index}-${edge.source}-${edge.target}`,
-      source: edge.source,
-      target: edge.target,
-      type: 'customEdge',
-      data: {
-        label: edge.label,
-        translation: edge.translation,
-        arrowType: arrowType,
-        showTranslation: true
-      },
-      // Add markerEnd based on arrowType
-      markerEnd: arrowType !== 'none' ? {
-        type: getMarkerType(arrowType),
-        color: '#555',
-        width: 20,
-        height: 20
-      } : undefined,
-      animated: true
-    };
-  });
-
-
-
-
-    // Apply layout
     const layoutedNodes = getLayoutedElements(transformedNodes, transformedEdges);
-
     return { nodes: layoutedNodes, edges: transformedEdges };
   };
-       const onConnect = useCallback(
-  connection => {
-    const newEdge = {
-      ...connection,
-      type: 'customEdge',
-      id: `e${Date.now()}`,
-      data: {
-        label: 'New Connection',
-        translation: '',
-        showTranslation: true,
-        arrowType: 'arrow' // Default to directed edge
-      },
-      markerEnd: {
-        type: MarkerType.Arrow,
-        color: '#555',
-        width: 20,
-        height: 20
-      },
-      animated: true
-    };
-    setEdges(eds => addEdge(newEdge, eds));
-  },
-  [setEdges]
-);
 
+  const onConnect = useCallback(
+    connection => {
+      const newEdge = {
+        ...connection,
+        type: 'customEdge',
+        id: `e${Date.now()}`,
+        data: {
+          label: 'New Connection',
+          translation: '',
+          showTranslation: true,
+          arrowType: 'arrow'
+        },
+        markerEnd: {
+          type: MarkerType.Arrow,
+          color: '#555',
+          width: 20,
+          height: 20
+        },
+        animated: true
+      };
+      setEdges(eds => addEdge(newEdge, eds));
+    },
+    [setEdges]
+  );
 
-
-     // Add helper function to get marker type
-const getMarkerType = (arrowType) => {
-  switch(arrowType) {
-    case 'arrow':
-      return MarkerType.Arrow;
-    case 'arrowclosed':
-      return MarkerType.ArrowClosed;
-    default:
-      return MarkerType.Arrow;
-  }
-};
-
+  const getMarkerType = (arrowType) => {
+    switch(arrowType) {
+      case 'arrow':
+        return MarkerType.Arrow;
+      case 'arrowclosed':
+        return MarkerType.ArrowClosed;
+      default:
+        return MarkerType.Arrow;
+    }
+  };
 
   const handleSubmit = async () => {
     if (!text.trim()) return;
 
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:8080/api/generate-graph/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text })
-      });
-
-      const graphData = await response.json();
+      const response = await api.post('/api/generate-graph/', { text });
+      const graphData = await response.data;
       const { nodes: newNodes, edges: newEdges } = transformResponseToGraph(graphData);
-
       setNodes(newNodes);
       setEdges(newEdges);
     } catch (error) {
@@ -192,8 +191,8 @@ const getMarkerType = (arrowType) => {
     [nodes, edges]
   );
 
-   return (
-    <div style={{ height: '600px', width: '1000px', position: 'relative' }}>
+  return (
+    <div style={{ height: '600px', width: '100%', position: 'relative' }}>
       <ReactFlow
         colorMode="dark"
         nodes={nodes}
@@ -238,6 +237,6 @@ const getMarkerType = (arrowType) => {
       </ReactFlow>
     </div>
   );
-}
+};
 
-export default Flow;
+export default CreateGraphPage;
