@@ -93,7 +93,7 @@ const GraphManager = () => {
     };
 
     return (
-        <div className="container">
+        <div className="graphContainer">
             <div className='wordListsContainer'>
                 <h3>Your Graphs</h3>
                 <ul>

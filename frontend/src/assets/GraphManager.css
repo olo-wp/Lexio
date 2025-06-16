@@ -1,8 +1,7 @@
-.container {
+.graphContainer {
   display: flex;
   height: calc(100vh - 60px);
   padding: 1.5rem;
-  background: #f8fafc;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
