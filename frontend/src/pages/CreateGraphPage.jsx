@@ -100,19 +100,27 @@ const CreateGraphPage = ({
   });
 
   // Sync internal state with external changes
-  useEffect(() => {
+useEffect(() => {
+  if (JSON.stringify(initialNodes) !== JSON.stringify(nodes)) {
     setNodes(initialNodes);
+  }
+  if (JSON.stringify(initialEdges) !== JSON.stringify(edges)) {
     setEdges(initialEdges);
-  }, [initialNodes, initialEdges]);
+  }
+}, [initialNodes, initialEdges]);
 
-  // Notify parent of changes
-  useEffect(() => {
+// Only notify parent when changes are meaningful
+useEffect(() => {
+  if (JSON.stringify(nodes) !== JSON.stringify(initialNodes)) {
     externalNodesChange(nodes);
-  }, [nodes]);
+  }
+}, [nodes]);
 
-  useEffect(() => {
+useEffect(() => {
+  if (JSON.stringify(edges) !== JSON.stringify(initialEdges)) {
     externalEdgesChange(edges);
-  }, [edges]);
+  }
+}, [edges]);
    useEffect(() => {
     setText(generationText);
   }, [generationText]);

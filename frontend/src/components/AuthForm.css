@@ -10,6 +10,34 @@
     margin-top: 70px;
 }
 
+
+.resultsContainer {
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+.resultsContainer h3 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.resultsContainer pre {
+    background-color: #fff;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #e1e4e8;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #24292e;
+    line-height: 1.5;
+}
+
 .form {
     display: flex;
     flex-direction: column;
