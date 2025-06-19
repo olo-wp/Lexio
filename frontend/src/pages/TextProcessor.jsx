@@ -84,13 +84,13 @@ function TextProcessor() {
               {loading ? 'Processing...' : 'Process wordset'}
           </button>
       </form>
-
-        {result && (
-            <div>
+          {result && (
+            <div className={"resultsContainer"}>
                 <h3>Results:</h3>
                 <pre>{JSON.stringify(result, null, 2)}</pre>
             </div>
         )}
+
     </div>
   );
 }

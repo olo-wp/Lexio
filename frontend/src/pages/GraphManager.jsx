@@ -58,14 +58,14 @@ const GraphManager = () => {
                 const response = await api.post('/api/user/graph/', graphData);
                 if (response.status === 201) {
                     setGraphs(prev => [...prev, response.data]);
-                    setMode(0);
+
                 }
             } else if (mode === 2) { // Update existing
                 graphData.id = currentID;
                 const response = await api.put('/api/user/graph/' + currentID + '/', graphData);
                 if (response.status === 200) {
                     setGraphs(prev => prev.map(g => g.id === currentID ? response.data : g));
-                    setMode(0);
+                    
                 }
             }
         } catch (e) {
